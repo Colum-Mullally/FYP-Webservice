@@ -1,4 +1,4 @@
-package colum.mullally.fyp;
+package colum.mullally.fyp.model;
 
 import java.util.ArrayList;
 import java.util.List;

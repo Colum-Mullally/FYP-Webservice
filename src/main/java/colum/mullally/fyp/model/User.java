@@ -1,6 +1,6 @@
-package colum.mullally.fyp;
+package colum.mullally.fyp.model;
 
-import colum.mullally.fyp.pdfForm;
+import colum.mullally.fyp.model.pdfForm;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

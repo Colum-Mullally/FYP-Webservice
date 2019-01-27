@@ -1,5 +1,8 @@
 package colum.mullally.fyp;
 
+import colum.mullally.fyp.Repositories.UserRepository;
+import colum.mullally.fyp.model.User;
+import colum.mullally.fyp.model.pdfForm;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
