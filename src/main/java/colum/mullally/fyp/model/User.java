@@ -1,6 +1,6 @@
 package colum.mullally.fyp.model;
 
-import colum.mullally.fyp.model.pdfForm;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,9 +18,14 @@ public class User {
     }
 
     public User(String name, List<pdfForm> pdf) {
-        this.id = id;
+        this.id =id;
         this.name = name;
         this.pdf = pdf;
+    }
+    public User(String name) {
+        this.id =id;
+        this.name = name;
+        this.pdf = new ArrayList<>();
     }
 
     public String getName() {

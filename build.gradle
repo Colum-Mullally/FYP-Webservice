@@ -26,6 +26,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation'org.springframework.boot:spring-boot-starter-security'
+	compile 'com.amazonaws:aws-java-sdk:1.11.133'
+	compile 'org.apache.pdfbox:pdfbox:1.8.6'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }

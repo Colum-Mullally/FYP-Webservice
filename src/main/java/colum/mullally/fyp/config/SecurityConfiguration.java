@@ -20,23 +20,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     MongoUserDetailsService userDetailsService;
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder builder) throws Exception {
+        builder.userDetailsService(userDetailsService);
+    }
     @Override
     public void configure(HttpSecurity httpSecurity){
         try {
-            httpSecurity.authorizeRequests().anyRequest().authenticated().and().httpBasic();
+            httpSecurity.authorizeRequests().anyRequest().permitAll().and().httpBasic();
             httpSecurity.csrf().disable();
         } catch (Exception e){
 
         }
 
     }
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    @Override
-    public void configure(AuthenticationManagerBuilder builder) throws Exception {
-        builder.userDetailsService(userDetailsService);
-    }
-
 }

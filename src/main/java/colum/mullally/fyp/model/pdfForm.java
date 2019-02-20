@@ -1,32 +1,36 @@
 package colum.mullally.fyp.model;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class pdfForm {
     private String name;
-    private List<String> attributes;
+    private List<ContentField> attributes;
 
     public pdfForm() {
         this.attributes = new ArrayList<>();
     }
 
-    public pdfForm(String name, List<String> attributes) {
+    public pdfForm(String name) {
         this.name = name;
-        this.attributes = attributes;
+        this.attributes = new ArrayList<ContentField>();
     }
     public String getName() {
         return name;
     }
 
-    public List<String> getAttributes() {
+    public List<ContentField> getAttributes() {
         return attributes;
     }
     public void setName(String name) {
         this.name = name;
     }
 
-    public void addAttributes(String attribute) {
-        this.attributes.add(attribute);
+    public void addAttributes(String name, String content) {
+        this.attributes.add(new ContentField(name, content));
+    }
+    public void addAttributes(String name) {
+        this.attributes.add(new ContentField(name, null));
     }
 }
