@@ -6,6 +6,7 @@ import java.util.List;
 
 public class pdfForm {
     private String name;
+    private String url;
     private List<ContentField> attributes;
 
     public pdfForm() {
@@ -32,5 +33,21 @@ public class pdfForm {
     }
     public void addAttributes(String name) {
         this.attributes.add(new ContentField(name, null));
+    }
+
+    public String getUrl() {
+        return url;
+    }
+    public int getAttributesIndex(String name){
+        for(int x =0; x < attributes.size();x++){
+            if(attributes.get(x).getName().matches(name)){
+                return x;
+            }
+        }
+        return -1;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

@@ -1,5 +1,6 @@
 package colum.mullally.fyp.Service;
 
+import colum.mullally.fyp.model.pdfForm;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -22,6 +23,9 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +47,7 @@ public class AmazonClient {
         BasicAWSCredentials creds = new BasicAWSCredentials(this.accessKey, this.secretKey);
         s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-1").withCredentials(new AWSStaticCredentialsProvider(creds)).build();
     }
+    private COSArrayList lista;
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());
         FileOutputStream fos = new FileOutputStream(convFile);
@@ -63,15 +68,10 @@ public class AmazonClient {
         try {
             File file = convertMultiPartToFile(multipartFile);
             String fileName = generateFileName(multipartFile);
-//            PDDocument doc = PDDocument.load(file);
-//            PDDocumentCatalog pdCatalog = doc.getDocumentCatalog();
-//            PDAcroForm pdAcroForm = pdCatalog.getAcroForm();
-//            COSArrayList lista = (COSArrayList)pdAcroForm.getFields();
-//            System.out.println(lista.size());
-//            for (int x =0 ; x<lista.size();x++){
-//            PDField temp =(PDField)lista.get(x);
-//            System.out.println(temp.getAlternateFieldName());
-//            }
+            PDDocument doc = PDDocument.load(file);
+            PDDocumentCatalog pdCatalog = doc.getDocumentCatalog();
+            PDAcroForm pdAcroForm = pdCatalog.getAcroForm();
+            lista = (COSArrayList)pdAcroForm.getFields();
             fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
             uploadFileTos3bucket(fileName, file);
             file.delete();
@@ -89,13 +89,34 @@ public class AmazonClient {
         }
         return "Successfully deleted";
     }
-//    public  getFileFromS3Bucket(String fileUrl){
-//        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
-//        try {
-//            return (s3Client.getObject(bucketName, fileName).getObjectContent());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+
+    public COSArrayList getLista() {
+        return lista;
+    }
+    public File getFileFromS3Bucket(pdfForm form){
+        String fileName = form.getUrl().substring(form.getUrl().lastIndexOf("/") + 1);
+        try {
+            InputStream in = s3Client.getObject(bucketName, fileName).getObjectContent();
+            File temp = File.createTempFile(fileName, "");
+            Files.copy(in, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            PDDocument doc = PDDocument.load(temp);
+            PDDocumentCatalog pdCatalog = doc.getDocumentCatalog();
+            PDAcroForm pdAcroForm = pdCatalog.getAcroForm();
+            for(int x=0; x<form.getAttributes().size();x++) {
+                PDField field = pdAcroForm.getField(form.getAttributes().get(x).getName());
+                if( field != null && form.getAttributes().get(x).getContent()!= null) {
+                    field.setValue(form.getAttributes().get(x).getContent());
+                }
+            }
+            doc.save(temp);
+            doc.close();
+            in.close();
+            return temp;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+   }
 
 }

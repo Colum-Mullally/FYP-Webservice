@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity){
         try {
-            httpSecurity.authorizeRequests().anyRequest().permitAll().and().httpBasic();
+            httpSecurity.authorizeRequests().antMatchers("/v1/register").permitAll().anyRequest().authenticated().and().httpBasic();
             httpSecurity.csrf().disable();
         } catch (Exception e){
 

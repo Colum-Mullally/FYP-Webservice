@@ -10,7 +10,7 @@ import java.util.List;
 public class User {
     @Id
     private String id;
-    private String name;
+    private String username;
     private List<pdfForm> pdf;
 
     public User(){
@@ -19,21 +19,21 @@ public class User {
 
     public User(String name, List<pdfForm> pdf) {
         this.id =id;
-        this.name = name;
+        this.username = name;
         this.pdf = pdf;
     }
     public User(String name) {
         this.id =id;
-        this.name = name;
+        this.username = name;
         this.pdf = new ArrayList<>();
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public List<pdfForm> getPdf() {
@@ -42,6 +42,16 @@ public class User {
 
     public void addPdf(pdfForm pdf) {
         this.pdf.add(pdf);
+    }
+    public int getPdfIndex(String name){
+        for(int x =0; x < pdf.size();x++){
+            System.out.println(pdf.get(x).getName());
+            System.out.println(name);
+            if(pdf.get(x).getName().matches(name)){
+                return x;
+            }
+        }
+        return -1;
     }
 
     public String getId() {
