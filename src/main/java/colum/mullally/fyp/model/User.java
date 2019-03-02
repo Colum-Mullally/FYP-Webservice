@@ -57,4 +57,12 @@ public class User {
     public String getId() {
         return id;
     }
+
+    public void deleteDoc(String fileUrl) {
+        for(int x =0; x < pdf.size();x++){
+            if(pdf.get(x).getUrl().matches(fileUrl)){
+                pdf.remove(x);
+            }
+        }
+    }
 }

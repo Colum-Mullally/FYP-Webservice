@@ -55,15 +55,15 @@ public class UserAuthentication {
     public String getUsername() {
         return username;
     }
-    public void setRole(String username) {
-        this.username = username;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getRole() {
         return role;
     }
     public boolean hasRole(String role){
-        if(this.role == role){
+        if(this.role.matches(role)){
             return true;
         }
         else

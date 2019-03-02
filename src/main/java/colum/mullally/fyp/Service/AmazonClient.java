@@ -4,6 +4,7 @@ import colum.mullally.fyp.model.pdfForm;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -27,7 +28,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class AmazonClient {
@@ -38,14 +38,10 @@ public class AmazonClient {
     private String endpointUrl;
     @Value("${s3.bucket}")
     private String bucketName;
-    @Value("${aws.access_key_id}")
-    private String accessKey;
-    @Value("${aws.secret_access_key}")
-    private String secretKey;
     @PostConstruct
     private void initializeAmazon() {
-        BasicAWSCredentials creds = new BasicAWSCredentials(this.accessKey, this.secretKey);
-        s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-1").withCredentials(new AWSStaticCredentialsProvider(creds)).build();
+
+        s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-1").withCredentials(new EnvironmentVariableCredentialsProvider()).build();
     }
     private COSArrayList lista;
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
