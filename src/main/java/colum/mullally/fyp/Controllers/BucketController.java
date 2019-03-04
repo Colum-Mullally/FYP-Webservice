@@ -80,4 +80,26 @@ public class BucketController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    @GetMapping(value="/view/{pdf}",produces = "application/pdf")
+    public ResponseEntity saveAndView(@PathVariable("pdf") String pdfName, Principal principal) {
+        User user = userRepository.findByUsername(principal.getName());
+        int index = user.getPdfIndex(pdfName);
+        if(index >= 0) {
+            pdfForm form = user.getPdf().get(index);
+            File file = amazonClient.getFileFromS3Bucket(form);
+            try {
+                byte[] content = Files.readAllBytes(file.toPath());
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("content-disposition", "inline;filename=" + pdfName);
+                headers.setContentDispositionFormData(pdfName, pdfName);
+                headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+                ResponseEntity<byte[]> response = new ResponseEntity<>(content, headers, HttpStatus.OK);
+                return response;
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

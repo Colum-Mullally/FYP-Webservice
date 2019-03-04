@@ -40,7 +40,6 @@ public class AmazonClient {
     private String bucketName;
     @PostConstruct
     private void initializeAmazon() {
-
         s3Client = AmazonS3ClientBuilder.standard().withRegion("eu-west-1").withCredentials(new EnvironmentVariableCredentialsProvider()).build();
     }
     private COSArrayList lista;
