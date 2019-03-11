@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -32,6 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     @Override
     public void configure(HttpSecurity httpSecurity){
+        httpSecurity.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
         try {
             httpSecurity.authorizeRequests().antMatchers("/v1/register").permitAll().anyRequest().authenticated().and().httpBasic().and().csrf().disable();
         } catch (Exception e){
