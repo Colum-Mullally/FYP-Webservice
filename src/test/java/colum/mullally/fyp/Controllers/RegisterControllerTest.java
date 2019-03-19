@@ -26,7 +26,7 @@ public class RegisterControllerTest {
 
     @Rule
     public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(
-            "/build/generated-snippets");
+            "build/generated-snippets");
 
 
     private MockMvc mockMvc;
