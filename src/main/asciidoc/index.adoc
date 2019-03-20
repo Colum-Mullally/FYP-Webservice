@@ -1,0 +1,86 @@
+:sectnums:
+:sectnumlevels: 5
+:toc: right
+:toclevels: 4
+:page-layout: docs
+
+= FYP REST Docs
+
+== Version 1
+=== Registration
+.request
+include::{snippets}/Register/http-request.adoc[]
+
+.response
+include::{snippets}/Register/http-response.adoc[]
+
+=== User
+
+==== User details
+
+===== Get User-data
+.request
+include::{snippets}/get userdata/http-request.adoc[]
+
+.response
+include::{snippets}/get userdata/http-response.adoc[]
+
+===== Get pdf-data
+.request
+include::{snippets}/get pdfdata/http-request.adoc[]
+
+.response
+include::{snippets}/get pdfdata/http-response.adoc[]
+
+===== Fill out Text Field
+.request
+include::{snippets}/set text field/http-request.adoc[]
+
+.response
+include::{snippets}/set text field/http-response.adoc[]
+
+==== Storage
+===== Upload File
+.request
+include::{snippets}/Upload file/http-request.adoc[]
+
+.response
+include::{snippets}/Upload file/http-response.adoc[]
+===== Download File
+.request
+include::{snippets}/Download file/http-request.adoc[]
+
+.response
+include::{snippets}/Download file/http-response.adoc[]
+===== Delete File
+.request
+include::{snippets}/Delete file/http-request.adoc[]
+
+.response
+include::{snippets}/Delete file/http-response.adoc[]
+
+===== View File
+
+.request
+include::{snippets}/View file/http-request.adoc[]
+
+.response
+include::{snippets}/View file/http-response.adoc[]
+
+=== Admin
+*Only accessible to users with Admin privileges
+
+==== Get all users
+.request
+include::{snippets}/Admin get all/http-request.adoc[]
+
+.response
+include::{snippets}/Admin get all/http-response.adoc[]
+
+
+==== Promote user to Administrator
+.request
+include::{snippets}/Admin Promote/http-request.adoc[]
+
+.response
+include::{snippets}/Admin Promote/http-response.adoc[]

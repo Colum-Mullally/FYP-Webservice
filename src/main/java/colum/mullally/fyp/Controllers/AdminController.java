@@ -36,7 +36,6 @@ public class AdminController {
     @PostMapping("/promote")
     public ResponseEntity promote(@RequestParam("username") String username, Principal principal){
         UserAuthentication user = userAuthenticationRepository.findByUsername(principal.getName());
-        System.out.println(user.getRole());
         if (user.hasRole("ADMIN")){
         user = userAuthenticationRepository.findByUsername(username);
         user.setRole("ADMIN");

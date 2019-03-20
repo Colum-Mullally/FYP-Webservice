@@ -38,7 +38,7 @@ public class UserController {
     public ResponseEntity pdfDetails(Principal principal, @PathVariable("pdf") String pdf){
         User user =this.userRepository.findByUsername(principal.getName());
         int index = user.getPdfIndex(pdf);
-        if(index<0){
+        if(index>=0){
         return new ResponseEntity<>(user.getPdf().get(index),HttpStatus.OK);
         } else {
             return new ResponseEntity<>("No PDF of that name is associated with this account",HttpStatus.NOT_FOUND);
@@ -48,10 +48,10 @@ public class UserController {
     public ResponseEntity pdfDetails(Principal principal, @PathVariable("pdf") String pdf, @PathVariable("contentFieldName") String contentFieldName, @RequestParam("content") String content){
         User user =this.userRepository.findByUsername(principal.getName());
         int index = user.getPdfIndex(pdf);
-        if(index<0) {
+        if(index>=0) {
             pdfForm form = user.getPdf().get(index);
             index = form.getAttributesIndex(contentFieldName);
-            if(index<0) {
+            if(index>=0) {
                 form.getAttributes().get(index).setContent(content);
                 userRepository.save(user);
                 return new ResponseEntity<>("Successfully", HttpStatus.OK);

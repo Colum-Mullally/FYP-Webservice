@@ -51,7 +51,7 @@ public class BucketController {
     }
 
     @DeleteMapping("/deleteFile")
-    public ResponseEntity deleteFile(@RequestPart(value = "url") String fileUrl,Principal principal) {
+    public ResponseEntity deleteFile(@RequestParam(value = "url") String fileUrl,Principal principal) {
         User user = userRepository.findByUsername(principal.getName());
         user.deleteDoc("fileUrl");
         userRepository.save(user);
