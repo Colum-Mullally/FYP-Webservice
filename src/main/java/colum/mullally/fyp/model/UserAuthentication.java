@@ -2,7 +2,6 @@ package colum.mullally.fyp.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Document(collection = "UserAuthentication")
 public class UserAuthentication {

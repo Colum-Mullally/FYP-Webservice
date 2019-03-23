@@ -35,7 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity){
         httpSecurity.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
         try {
-            httpSecurity.authorizeRequests().antMatchers("/v1/register").permitAll().anyRequest().authenticated().and().httpBasic().and().csrf().disable();
+            httpSecurity.authorizeRequests().antMatchers("/v1/register").permitAll()
+                    .anyRequest().authenticated().and().httpBasic().and().csrf().disable();
         } catch (Exception e){
 
         }

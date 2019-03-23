@@ -53,7 +53,7 @@ public class BucketController {
     @DeleteMapping("/deleteFile")
     public ResponseEntity deleteFile(@RequestParam(value = "url") String fileUrl,Principal principal) {
         User user = userRepository.findByUsername(principal.getName());
-        user.deleteDoc("fileUrl");
+        user.deleteDoc(fileUrl);
         userRepository.save(user);
         String Content =this.amazonClient.deleteFileFromS3Bucket(fileUrl);
         return new ResponseEntity<>(Content,HttpStatus.OK);
